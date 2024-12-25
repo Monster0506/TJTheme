@@ -1,0 +1,17 @@
+name = 'TJ Theme'
+license = 'MIT'
+licenselink = 'https://github.com/Monster0506/TJTheme/LICENSE'
+description = 'Simple Hugo Theme'
+
+# The home page of the theme, where the source can be found
+homepage = 'https://github.com/Monster0506/TJTheme'
+
+# If you have a running demo of the theme
+# demosite = 'https://owner.github.io/repo'
+
+# Taxonomy terms
+
+# If the theme has a single author
+[author]
+  name = 'Monster0506'
+  homepage = 'https://github.com/Monster0506/TJTheme'

@@ -1,0 +1,28 @@
+{{ $id := delimit (shuffle (seq 1 1000)) "" }}
+<div class="quiz" data-quiz="{{ $id }}">
+    {{ $content := .Inner | strings.TrimRight "\n" | strings.TrimLeft "\n" }}
+    {{ $lines := split $content "\n" }}
+    
+    {{ range $index, $line := $lines }}
+        {{ if hasPrefix $line "Q: " }}
+            <div class="quiz-question">{{ trim (strings.TrimPrefix "Q: " $line) " " }}</div>
+            <div class="quiz-options">
+        {{ else if hasPrefix $line "- " }}
+            {{ $option := trim (strings.TrimPrefix "- " $line) " " }}
+            {{ $isCorrect := in $option "[correct]" }}
+            {{ $cleanOption := trim (replace $option "[correct]" "") " " }}
+            <label class="quiz-option">
+                <input 
+                    type="radio" 
+                    name="quiz-{{ $id }}" 
+                    value="{{ $isCorrect }}"
+                    data-correct="{{ $isCorrect }}"
+                >
+                <span class="quiz-option-text">{{ $cleanOption }}</span>
+            </label>
+        {{ end }}
+    {{ end }}
+    </div>
+    <div class="quiz-feedback hidden"></div>
+    <button class="quiz-submit">Check Answer</button>
+</div> 

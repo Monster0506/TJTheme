@@ -1,0 +1,151 @@
+{{ if and .TableOfContents (not .Params.notoc) }}
+<aside class="toc-scrollspy">
+    <div class="toc-line"></div>
+    <div class="viewport-indicator"></div>
+    <nav>
+        <ul>
+            {{ $toc := .TableOfContents }}
+            {{ $tocContent := (printf "%s" $toc) }}
+            {{ $regex := "<li>\\s*<a href=\"#([^\"]+)\">([^<]+)</a>" }}
+            {{ $matches := findRE $regex $tocContent -1 }}
+            {{ range $matches }}
+                {{ $match := . }}
+                {{ $id := replaceRE $regex "$1" $match }}
+                {{ $title := replaceRE $regex "$2" $match }}
+                {{ $spaces := findRE "^\\s+" $match }}
+                {{ $level := 1 }}
+                {{ if $spaces }}
+                    {{ $level = len (index $spaces 0) | div 2 | add 1 }}
+                {{ end }}
+                <li class="toc-item level-{{ $level }}" data-level="{{ $level }}">
+                    <a href="#{{ $id }}">
+                        <span class="toc-dot"></span>
+                        <span class="toc-text">{{ $title }}</span>
+                    </a>
+                </li>
+            {{ end }}
+        </ul>
+    </nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocItems = document.querySelectorAll('.toc-item a');
+    const tocNav = document.querySelector('.toc-scrollspy');
+    const viewportIndicator = document.querySelector('.viewport-indicator');
+    let activeItem = null;
+    let isScrolling = false;
+    
+    // Handle text positioning on hover
+    tocItems.forEach(item => {
+        item.addEventListener('mouseenter', function(e) {
+            const text = this.querySelector('.toc-text');
+            const rect = this.getBoundingClientRect();
+            text.style.top = `${rect.top}px`;
+        });
+
+        // Add smooth scrolling to links
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const headerOffset = 100;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+
+                history.pushState(null, null, `#${targetId}`);
+            }
+        });
+    });
+
+    // Function to update viewport indicator position
+    function updateViewportIndicator(item) {
+        if (!item) {
+            viewportIndicator.style.opacity = '0';
+            tocNav.classList.remove('has-active');
+            return;
+        }
+
+        const itemRect = item.getBoundingClientRect();
+        viewportIndicator.style.top = `${itemRect.top}px`;
+        tocNav.classList.add('has-active');
+    }
+
+    // Function to scroll active item into view
+    function scrollActiveIntoView(item) {
+        if (!item || isScrolling) return;
+        
+        isScrolling = true;
+        const itemRect = item.getBoundingClientRect();
+        const navRect = tocNav.getBoundingClientRect();
+        const padding = 40;
+        
+        let targetScroll;
+        const itemTop = itemRect.top - navRect.top + tocNav.scrollTop;
+        
+        const totalHeight = tocNav.scrollHeight;
+        const visibleHeight = tocNav.clientHeight;
+        const maxScroll = totalHeight - visibleHeight;
+        
+        if (tocNav.scrollTop >= maxScroll - padding) {
+            targetScroll = maxScroll;
+        } else {
+            targetScroll = itemTop - (visibleHeight / 2) + (itemRect.height / 2);
+            targetScroll = Math.max(padding, Math.min(targetScroll, maxScroll - padding));
+        }
+        
+        tocNav.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+        });
+        
+        setTimeout(() => {
+            isScrolling = false;
+            // Update indicator position after scroll
+            updateViewportIndicator(item);
+        }, 500);
+    }
+
+    // Intersection Observer for headings
+    const headingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            const tocItem = document.querySelector(`.toc-item a[href="#${id}"]`);
+            
+            if (entry.isIntersecting && tocItem) {
+                if (activeItem) {
+                    activeItem.parentElement.classList.remove('active');
+                }
+                
+                tocItem.parentElement.classList.add('active');
+                activeItem = tocItem;
+                
+                scrollActiveIntoView(tocItem.parentElement);
+                updateViewportIndicator(tocItem.parentElement);
+            }
+        });
+    }, {
+        rootMargin: '-20% 0px -80% 0px'
+    });
+
+    // Observe all headings
+    document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').forEach(heading => {
+        headingObserver.observe(heading);
+    });
+
+    // Update indicator on scroll
+    tocNav.addEventListener('scroll', () => {
+        if (activeItem) {
+            updateViewportIndicator(activeItem.parentElement);
+        }
+    });
+});
+</script>
+{{ end }}

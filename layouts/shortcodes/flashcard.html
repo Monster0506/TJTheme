@@ -1,0 +1,10 @@
+<div class="flashcard">
+    <div class="flashcard-inner">
+        <div class="flashcard-front">
+            {{ .Get "front" | markdownify }}
+        </div>
+        <div class="flashcard-back">
+            {{ .Get "back" | markdownify }}
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,76 @@
+{{ define "main" }}
+<div class="post-container">
+    {{ partial "toc-scrollspy.html" . }}
+    
+    <article class="post">
+        <header class="post-header">
+            <h1>{{ .Title }}</h1>
+            <div class="post-meta">
+                <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+                {{ with .Params.categories }}
+                • {{ range . }}
+                    <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+                {{ end }}
+                {{ end }}
+                {{ with .ReadingTime }}
+                • {{ . }} min read
+                {{ end }}
+                {{ with .Params.author }}
+                • by {{ . }}
+                {{ end }}
+            </div>
+        </header>
+
+        <div class="post-content">
+            {{ .Content | safeHTML }}
+        </div>
+
+        {{ with .Params.tags }}
+        <footer class="post-footer">
+            <div class="post-tags">
+                {{ range . }}
+                <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>
+                {{ end }}
+            </div>
+        </footer>
+        {{ end }}
+
+        <nav class="post-nav">
+            {{ with .PrevInSection }}
+            <a class="prev" href="{{ .RelPermalink }}">← {{ .Title }}</a>
+            {{ end }}
+            {{ with .NextInSection }}
+            <a class="next" href="{{ .RelPermalink }}">{{ .Title }} →</a>
+            {{ end }}
+        </nav>
+    </article>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            if (id) {
+                const tocItem = document.querySelector(`.toc-item a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.intersectionRatio > 0) {
+                        document.querySelectorAll('.toc-item').forEach(item => item.classList.remove('active'));
+                        tocItem.parentElement.classList.add('active');
+                    }
+                }
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -80% 0px'
+    });
+
+    // Track all headers that have IDs
+    document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').forEach((header) => {
+        observer.observe(header);
+    });
+});
+</script>
+{{ end }}

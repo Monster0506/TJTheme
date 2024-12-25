@@ -1,0 +1,3 @@
+{{ $emoji := .Get 0 }}
+{{ $size := .Get 1 | default "medium" }}
+<span class="emoji emoji-{{ $size }}">{{ $emoji }}</span> 

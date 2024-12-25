@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ with .Title }}{{ . }} | {{ end }}{{ site.Title }}{{ end }}</title>
+    {{ $style := resources.Get "css/main.css" | resources.Minify }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    {{ partial "head.html" . }}
+    {{ $code := resources.Get "js/code.js" | minify | fingerprint }}
+    <script defer src="{{ $code.RelPermalink }}"></script>
+    {{ $katex := resources.Get "js/katex.js" | minify | fingerprint }}
+    <script defer src="{{ $katex.RelPermalink }}"></script>
+    {{ $github := resources.Get "js/github.js" | minify | fingerprint }}
+    <script defer src="{{ $github.RelPermalink }}"></script>
+    {{ $shortcodes := resources.Get "js/shortcodes.js" | minify | fingerprint }}
+    <script defer src="{{ $shortcodes.RelPermalink }}"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            {{ partial "menu.html" . }}
+        </div>
+    </header>
+    
+    <main class="container">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ now.Format "2006" }} {{ site.Title }}. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

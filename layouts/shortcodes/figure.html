@@ -1,0 +1,21 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $caption := .Get "caption" | default "" }}
+{{ $class := .Get "class" | default "" }}
+{{ $width := .Get "width" | default "100%" }}
+{{ $lightbox := .Get "lightbox" | default true }}
+
+<figure class="figure {{ $class }}">
+    {{ if $lightbox }}
+    <a href="{{ $src }}" class="lightbox-trigger">
+    {{ end }}
+        <img src="{{ $src }}" 
+             alt="{{ $alt }}" 
+             style="width: {{ $width }};"
+             loading="lazy"
+             {{ with .Get "height" }}height="{{ . }}"{{ end }}>
+    {{ if $lightbox }}</a>{{ end }}
+    {{ with $caption }}
+    <figcaption>{{ . | markdownify }}</figcaption>
+    {{ end }}
+</figure> 

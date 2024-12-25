@@ -1,0 +1,11 @@
+{{ $file := .Get "file" }}
+{{ $name := .Get "name" | default (path.Base $file) }}
+{{ $icon := .Get "icon" | default "📄" }}
+
+<a href="{{ $file }}" class="download-button" download>
+    <span class="download-icon">{{ $icon }}</span>
+    <span class="download-info">
+        <span class="download-name">{{ $name }}</span>
+        {{ with .Get "size" }}<span class="download-size">{{ . }}</span>{{ end }}
+    </span>
+</a> 

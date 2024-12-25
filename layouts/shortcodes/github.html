@@ -1,0 +1,8 @@
+{{ $user := .Get 0 }}
+{{ $repo := .Get 1 }}
+<div class="github-card" data-user="{{ $user }}" data-repo="{{ $repo }}">
+    <h3><a href="https://github.com/{{ $user }}/{{ $repo }}" target="_blank">{{ $repo }}</a></h3>
+    <div class="github-stats">
+        Loading repository data...
+    </div>
+</div> 

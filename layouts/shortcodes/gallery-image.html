@@ -1,0 +1,12 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $caption := .Get "caption" }}
+
+<figure class="gallery-item">
+    <a href="{{ $src }}" class="lightbox-trigger">
+        <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy">
+    </a>
+    {{ with $caption }}
+    <figcaption>{{ . | markdownify }}</figcaption>
+    {{ end }}
+</figure> 

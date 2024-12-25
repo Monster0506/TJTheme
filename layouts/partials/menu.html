@@ -1,0 +1,158 @@
+{{- /*
+Renders a menu for the given menu ID.
+
+@context {page} page The current page.
+@context {string} menuID The menu ID.
+
+@example: {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+*/}}
+
+<nav class="main-nav">
+    <div class="nav-left">
+        <div class="site-title">
+            <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+        </div>
+        
+        <div class="nav-links">
+            {{ $currentPage := . }}
+            {{ range .Site.Menus.main }}
+            <a class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}" href="{{ .URL }}">
+                {{ .Name }}
+            </a>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <!-- Random Post Button -->
+        {{ $posts := where .Site.RegularPages "Type" "posts" }}
+        {{ with $posts }}
+        <button class="nav-item random-post" title="Random Post" onclick="goToRandomPost()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+                <circle cx="7" cy="7" r="1.5"></circle>
+                <circle cx="17" cy="7" r="1.5"></circle>
+                <circle cx="7" cy="17" r="1.5"></circle>
+                <circle cx="17" cy="17" r="1.5"></circle>
+                <circle cx="12" cy="12" r="1.5"></circle>
+            </svg>
+        </button>
+        {{ end }}
+
+        <!-- Search Button -->
+        <button class="nav-item search-toggle" title="Search" onclick="toggleSearch()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<!-- Search Modal -->
+<div id="search-modal" class="search-modal">
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search posts..." autocomplete="off">
+        <div id="search-results"></div>
+    </div>
+</div>
+
+<script>
+const searchIndex = [
+    {{ range where .Site.RegularPages "Type" "posts" }}
+    {
+        title: {{ .Title | jsonify }},
+        content: {{ .Plain | jsonify }},
+        url: {{ .RelPermalink | jsonify }},
+        date: {{ .Date.Format "January 2, 2006" | jsonify }},
+        {{ with .Params.categories }}categories: {{ . | jsonify }},{{ end }}
+        {{ with .Params.tags }}tags: {{ . | jsonify }},{{ end }}
+    },
+    {{ end }}
+];
+
+// Random Post Function
+function goToRandomPost() {
+    const posts = [
+        {{ range where .Site.RegularPages "Type" "posts" }}
+            "{{ .RelPermalink }}",
+        {{ end }}
+    ];
+    const randomPost = posts[Math.floor(Math.random() * posts.length)];
+    window.location.href = randomPost;
+}
+
+// Theme Toggle Function
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+// Search Functions
+function toggleSearch() {
+    const modal = document.getElementById('search-modal');
+    modal.classList.toggle('active');
+    if (modal.classList.contains('active')) {
+        document.getElementById('search-input').focus();
+    }
+}
+
+function performSearch(query) {
+    const results = searchIndex.filter(item => {
+        const searchText = `${item.title} ${item.content} ${item.tags || ''} ${item.categories || ''}`.toLowerCase();
+        return searchText.includes(query.toLowerCase());
+    });
+
+    const resultsDiv = document.getElementById('search-results');
+    resultsDiv.innerHTML = '';
+
+    if (results.length === 0) {
+        resultsDiv.innerHTML = '<p class="no-results">No results found</p>';
+        return;
+    }
+
+    results.forEach(result => {
+        const resultElement = document.createElement('a');
+        resultElement.href = result.url.slice(1,-2);
+        resultElement.className = 'search-result';
+        resultElement.innerHTML = `
+            <div class="search-result-content">
+                <h3>${result.title}</h3>
+                <div class="search-result-meta">
+                    <span class="date">${result.date}</span>
+                    ${result.categories ? `<span class="categories">in ${result.categories.join(', ')}</span>` : ''}
+                </div>
+                <p class="search-result-summary">${result.content.slice(0, 150)}...</p>
+            </div>
+        `;
+        resultsDiv.appendChild(resultElement);
+    });
+}
+
+// Event Listeners
+document.getElementById('search-input').addEventListener('input', (e) => {
+    const query = e.target.value;
+    if (query.length >= 2) {
+        performSearch(query);
+    } else {
+        document.getElementById('search-results').innerHTML = '';
+    }
+});
+
+// Close search on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.getElementById('search-modal').classList.remove('active');
+    }
+});
+
+// Initialize theme
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+});
+</script>

@@ -1,0 +1,14 @@
+<div class="tabs">
+    <div class="tab-list" role="tablist">
+        {{ range $index, $tab := .Params }}
+        <button class="tab-button{{ if eq $index 0 }} active{{ end }}" 
+                role="tab" 
+                data-tab="{{ $index }}">
+            {{ $tab }}
+        </button>
+        {{ end }}
+    </div>
+    <div class="tab-content">
+        {{ .Inner }}
+    </div>
+</div> 

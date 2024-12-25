@@ -1,0 +1,21 @@
+{{ $url := .Get "url" }} {{ $title := .Get "title" }} {{ $description := .Get
+"description" }} {{ $image := .Get "image" | default "/images/default-link.png"
+}} {{ if strings.HasPrefix $url "<" }} {{ $url = substr $url 1 (sub (len $url)
+2) }} {{ end }}
+
+<a href="{{ $url }}" class="link-card" target="_blank" rel="noopener">
+  <div class="link-card-container">
+    <div
+      class="link-card-image"
+      style="background-image: url('{{ $image }}')"
+    ></div>
+    <div class="link-card-details">
+      <h3 class="link-card-title">{{ $title }}</h3>
+      {{ with $description }}
+      <p class="link-card-description">{{ . }}</p>
+      {{ end }}
+      <span class="link-card-url">{{ $url }}</span>
+    </div>
+  </div>
+</a>
+

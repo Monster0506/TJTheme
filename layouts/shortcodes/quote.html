@@ -1,0 +1,11 @@
+<blockquote class="fancy-quote{{ with .Get "type" }} quote-{{ . }}{{ end }}">
+    <div class="quote-content">{{ .Inner | markdownify }}</div>
+    {{ with .Get "author" }}
+    <footer class="quote-footer">
+        <cite>{{ . }}</cite>
+        {{ with $.Get "source" }}
+        <span class="quote-source">{{ . }}</span>
+        {{ end }}
+    </footer>
+    {{ end }}
+</blockquote> 
