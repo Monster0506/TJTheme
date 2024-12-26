@@ -1,10 +1,9 @@
 {{ $value := .Get "value" }} {{ $max := .Get "max" | default 100 }} {{ $type :=
 .Get "type" | default "bar" }} {{ $color := .Get "color" | default "accent" }}
-{{ $showValue := .Get "showValue" | default true }} {{ $size := .Get "size" |
-default "medium" }} {{ $label := .Get "label" }} {{ $percentage := div (mul
+{{ $showValue := .Get "showValue" | default true }}  {{ $label := .Get "label" }} {{ $percentage := div (mul
 $value 100.0) $max }}
 
-<div class="progress-wrapper progress-{{ $type }} progress-{{ $size }}">
+<div class="progress-wrapper progress-{{ $type }}">
   {{ with $label }}<span class="progress-label">{{ . }}</span>{{ end }}
   <div class="progress-container">
     {{ if eq $type "bar" }}
