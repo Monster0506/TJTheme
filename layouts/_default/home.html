@@ -84,7 +84,7 @@
                     <h3>Find me on</h3>
                     <div class="social-links">
                         {{ if .Site.Params.socials.github }}
-                        <a href="https://github.com/{{ .Site.Params.author.github }}" class="social-link github"
+                        <a href="https://github.com/{{ .Site.Params.socials.github }}" class="social-link github"
                             target="_blank" rel="noopener">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -97,7 +97,7 @@
                         </a>
                         {{ end }}
                         {{ if .Site.Params.socials.gitlab }}
-                        <a href="https://gitlab.com/{{ .Site.Params.author.gitlab }}" class="social-link gitlab"
+                        <a href="https://gitlab.com/{{ .Site.Params.socials.gitlab }}" class="social-link gitlab"
                             target="_blank" rel="noopener">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -110,7 +110,7 @@
                         </a>
                         {{ end }}
                         {{ if .Site.Params.socials.linkedin }}
-                        <a href="https://linkedin.com/in/{{ .Site.Params.author.linkedin }}"
+                        <a href="https://linkedin.com/in/{{ .Site.Params.socials.linkedin }}"
                             class="social-link linkedin" target="_blank" rel="noopener">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
