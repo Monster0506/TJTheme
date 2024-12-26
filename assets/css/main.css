@@ -354,9 +354,7 @@ img {
   border-radius: 50%;
   background-color: var(--text-secondary);
   opacity: 0.5;
-  transition:
-    background-color 0.3s ease,
-    opacity 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
   z-index: 1;
   position: relative;
   flex-shrink: 0;
@@ -865,7 +863,8 @@ article ol ol {
 
 /* Social Links */
 .social-links {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -881,6 +880,7 @@ article ol ol {
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
+  justify-content: center;
 }
 
 .social-link svg {
@@ -890,6 +890,42 @@ article ol ol {
 .social-link:hover {
   transform: translateY(-2px);
   color: var(--text-primary);
+}
+
+.social-link.instagram:hover {
+  background-color: #e1306c;
+}
+
+.social-link.facebook:hover {
+  background-color: #1877f2;
+}
+
+.social-link.youtube:hover {
+  background-color: #ff0000;
+}
+
+.social-link.stackoverflow:hover {
+  background-color: #e7700d;
+}
+
+.social-link.substack:hover {
+  background-color: #ff6719;
+}
+
+.social-link.twitter:hover {
+  background-color: #000000;
+}
+
+.social-link.hackerrank:hover {
+  background-color: #2ec866;
+}
+
+.social-link.reddit:hover {
+  background-color: #ff4500;
+}
+
+.social-link.medium:hover {
+  background-color: #00ab6c;
 }
 
 .social-link.github:hover {
@@ -908,10 +944,10 @@ article ol ol {
   stroke: var(--text-primary);
 }
 
-/* Mobile adjustments for social links */
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .social-links {
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 
   .social-link {
@@ -1423,9 +1459,7 @@ pre[data-lang]::before {
   padding: 1.5rem;
   margin: 1.5rem 0;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .github-card:hover {
@@ -1536,9 +1570,7 @@ pre[data-lang]::before {
   overflow: hidden;
   background: var(--bg-secondary);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .link-card:hover {
@@ -2320,4 +2352,3 @@ pre:hover .code-actions {
   color: var(--text-secondary);
   user-select: none;
 }
-

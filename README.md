@@ -21,9 +21,17 @@
 
 ```toml
 [params.socials]
-    github="your github username"
-    gitlab="Your Gitlab Name"
-    linkedin="Your Linkedin URL"
+    github="<Github Username>"
+    gitlab="<Gitlab Username>"
+    linkedin="<Linkedin Profile URL>"
+    instagram="<Instagram Username>"
+    facebook="<Facebook Profile URL>"
+    youtube="<Youtube Channel>"
+    stackoverflow="<Stackoverflow Username>"
+    reddit="<Reddit Username>"
+    medium="<Medium Username>"
+    substack="<Substack Username>"
+    twitter="<Twitter Username>"
 ```
 
 ### Newsletter
