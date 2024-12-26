@@ -54,6 +54,8 @@
 
 #### Code blocks
 
+Styled syntax-highlighted by language (using [prism.js](https://prismjs.com/)) code snippets with copy-to-clipboard functionality and line numbers
+
     ```python
     def hello_world():
         print("Hello, World!")
@@ -81,6 +83,8 @@
 
 ### Notices
 
+Alert boxes of different types
+
     {{< alert "warning" >}}
     This is a warning message!
     {{< /alert >}}
@@ -95,6 +99,8 @@ Color choices are:
 
 #### Details
 
+Expandable/collapsible content sections.
+
     {{< details "Click to expand" >}}
     {{< alert "default" >}}
     This content is hidden by default.
@@ -104,7 +110,11 @@ Color choices are:
 
 ### Images
 
+All images, whether in a figure or gallery, have lightbox functionality.
+
 #### Basic figure
+
+Image with caption
 
     {{< figure
     src="/icons/dice.svg"
@@ -114,6 +124,8 @@ Color choices are:
 
 #### Gallery
 
+Gallery of multiple captioned images
+
     {{< gallery columns=3 >}}
     {{< gallery-image src="/images/1.jpg" caption="Image 1" >}}
     {{< gallery-image src="/images/2.jpg" caption="Image 2" >}}
@@ -122,9 +134,13 @@ Color choices are:
 
 #### Video
 
+Youtube Embed by URL
+
     {{< youtube "dQw4w9WgXcQ" >}}
 
 ### Math
+
+Math with [KaTeX](https://katex.org/). See the [supported functions](https://katex.org/docs/supported) for a complete list of TeX functions supported by KaTeX.
 
 #### Blocks
 
@@ -137,6 +153,10 @@ Color choices are:
 ### External Sites
 
 #### Generic Link
+
+Interactive card for external/internal links.
+
+Two possible formats.
 
     {{< linkcard
     url="<https://example.com>"
@@ -154,6 +174,8 @@ Color choices are:
     >}}
 
 #### Github
+
+Displays GitHub repository information using the [Github Repos API](https://docs.github.com/en/rest/repos).
 
     {{< github "neovim" "neovim" >}}
 
@@ -201,6 +223,8 @@ Color choices are:
 
 #### Download
 
+Styled button for downloading files from a custom URL
+
     {{< download
     file="/files/example.pdf"
     name="Example PDF"
@@ -208,6 +232,8 @@ Color choices are:
     icon="📄" >}}
 
 #### Tabs
+
+Tabs for organizing content.
 
     {{< tabs "Tab 1" "Tab 2" "Tab 3" >}}
     {{< tab >}}
@@ -222,6 +248,8 @@ Color choices are:
     {{< /tabs >}}
 
 #### Filetree
+
+Visual representation of file structures.
 
     {{< filetree >}}
     - project/
@@ -244,6 +272,8 @@ Color choices are:
 
 ### Progress Bars
 
+For visually displaying progress metrics, two types
+
 Color choices are:
 
 - accent
@@ -264,6 +294,8 @@ Color choices are:
 
 #### Quiz
 
+Interactive multiple choice quiz with correct answers.
+
     {{< quiz >}}
     Q: What is 2 + 2?
 
@@ -273,6 +305,8 @@ Color choices are:
     {{< /quiz >}}
 
 #### Flashcard
+
+Flippable flashcard
 
     {{< flashcard
     front="What is the capital of France?"
