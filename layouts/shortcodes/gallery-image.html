@@ -1,4 +1,5 @@
 {{ $src := .Get "src" }}
+{{ if strings.HasPrefix $src "<" }} {{ $src = substr $src 1 (sub (len $src) 2) }} {{ end }}
 {{ $alt := .Get "alt" | default "" }}
 {{ $caption := .Get "caption" }}
 
