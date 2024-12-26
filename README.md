@@ -3,7 +3,7 @@
 ## Installation
 
 1. Inside of a hugo site, run `git init` if there is not an existing git repository.
-1. Run `git submodules add https://github.com/monster0506/tjtheme.git themes/TJTheme`
+1. Run `git submodule add https://github.com/monster0506/tjtheme.git themes/TJTheme`
 1. Change your theme in `hugo.toml` settings to `theme=TJTheme`
 
 ## Configuration
