@@ -8,15 +8,36 @@
 
 ## Configuration
 
-- In your `hugo.toml` file, add a field appearing like the following:
+- Append these snippets to your `hugo.toml` file to customize information
+
+### Name
 
 ```toml
-    [site]
-    [Author]
-        name="Your Name"
-        github="Your Github Username"
-        gitlab="Your Gitlab Name"
-        linkedin="Your Linkedin URL"
+[params.author]
+    name="Your Name"
+```
+
+### Socials
+
+```toml
+[params.socials]
+    github="your github username"
+    gitlab="Your Gitlab Name"
+    linkedin="Your Linkedin URL"
+```
+
+### Newsletter
+
+```toml
+[params.newsletter]
+    url="<Post Request Action Endpoint>"
+```
+
+### Tech Tags
+
+```toml
+[params]
+    techtags = [ "Go", "Python", "Rust", "React", "C++", "Javascript" ]
 ```
 
 ## Features
@@ -103,7 +124,7 @@ Color choices are:
 
 #### Inline
 
-    Lorem ipsum hosti. $a^2 + b^2 = c^2$ 
+    Lorem ipsum hosti. $a^2 + b^2 = c^2$
 
 ### External Sites
 
